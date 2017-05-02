@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Pepper &amp; Carrot Reader</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_archive">ArchiveActivity</string>
+    <string name="network_preference">Networks</string>
+    <string name="download_on_mobile_network_preference">Download on Mobile Network</string>
+</resources>

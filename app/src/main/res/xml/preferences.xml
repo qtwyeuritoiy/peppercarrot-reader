@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/network_preference">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="download_on_mobile_network"
+            android:title="@string/download_on_mobile_network_preference"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>
