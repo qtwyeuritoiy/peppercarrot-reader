@@ -1,8 +1,7 @@
 package nightlock.peppercarrot.activities
 
+import android.content.Context
 import android.os.Bundle
-import android.view.MenuItem
-
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -10,11 +9,12 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-
+import android.view.MenuItem
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.fragments.AboutFragment
 import nightlock.peppercarrot.fragments.ArchiveFragment
 import nightlock.peppercarrot.fragments.PreferenceFragment
+import nightlock.peppercarrot.utils.net.getEpisodeList
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -25,6 +25,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         initToolbar(toolbar)
+        checkInit()
+    }
+
+    private fun checkInit() {
+        val pref = getSharedPreferences("archive", Context.MODE_PRIVATE)
+        if (! pref.contains("episodeList")){
+            val task = KillerTask(
+                    getEpisodeList(),
+                    {result: List<String> -> {
+                        val editor = pref.edit()
+                        editor.putInt("episodeCount", result.size)
+                        for (i in result.indices) {
+                            val str = result[i]
+                            editor.putString("ep$i", str)
+                        }
+                        editor.apply()
+                    }},
+                    {})
+            task.go()
+        }
     }
 
     private fun initToolbar(toolbar: Toolbar) {

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Pepper&amp;CarrotReader.iml" filepath="$PROJECT_DIR$/Pepper&amp;CarrotReader.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/peppercarrot-reader.iml" filepath="$PROJECT_DIR$/peppercarrot-reader.iml" />
     </modules>
   </component>
 </project>

@@ -36,7 +36,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.1'
 
     compile 'com.evernote:android-job:1.1.10'
-    compile 'com.github.inaka:killertask:v1.2'
+    compile 'com.github.inaka:killertask:v1.0'
+    compile 'com.github.square:okhttp:parent-3.5.0'
     compile 'com.github.vlonjatg:progress-activity:v2.0.3'
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-2'
 }

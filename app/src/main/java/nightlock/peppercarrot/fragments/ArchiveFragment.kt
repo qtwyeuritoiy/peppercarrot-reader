@@ -22,10 +22,13 @@ class ArchiveFragment : Fragment(){
                               savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.content_archive, container, false)
 
+        initRecyclerView(view)
+        return view
+    }
+
+    private fun initRecyclerView(view: View) {
         val mRecycler = view.findViewById(R.id.archive_recycler) as RecyclerView
         mRecycler.layoutManager = LinearLayoutManager(view.context)
         mRecycler.adapter = ArchiveAdapter()
-
-        return view
     }
 }

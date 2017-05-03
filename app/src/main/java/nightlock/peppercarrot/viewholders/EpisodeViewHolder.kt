@@ -12,7 +12,7 @@ import nightlock.peppercarrot.R
 
 class EpisodeViewHolder private constructor(v: View): RecyclerView.ViewHolder(v){
     init {
-
+        var imageView = v.findViewById(R.id.episode_image)
     }
 
     object Factory{
