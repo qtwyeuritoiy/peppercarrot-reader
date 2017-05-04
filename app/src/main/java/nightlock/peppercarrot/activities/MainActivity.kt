@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun checkInit() {
         val pref = getSharedPreferences("archive", Context.MODE_PRIVATE)
-        if (! pref.contains("episodeList")){
+        if (! pref.contains("episodeCount")){
             val task = KillerTask(
                     getEpisodeList(),
                     {result: List<String> -> {

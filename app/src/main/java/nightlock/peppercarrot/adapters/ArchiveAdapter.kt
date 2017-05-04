@@ -1,5 +1,6 @@
 package nightlock.peppercarrot.adapters
 
+import android.content.SharedPreferences
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import nightlock.peppercarrot.viewholders.EpisodeViewHolder
@@ -8,9 +9,13 @@ import nightlock.peppercarrot.viewholders.EpisodeViewHolder
  * Created by nightlock on 5/2/17.
  */
 
-class ArchiveAdapter : RecyclerView.Adapter<EpisodeViewHolder>() {
+class ArchiveAdapter(context: Context): RecyclerView.Adapter<EpisodeViewHolder>() {
+    init{
+        val sharedPref = context.getSharedPreferences("archive", Context.MODE_PRIVATE) as SharedPreferences
+    }
+
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return sharedPref.getInt("archiveCount")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder {
@@ -18,7 +23,9 @@ class ArchiveAdapter : RecyclerView.Adapter<EpisodeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        holder.onBind(position)
+
+        val link = sharedPref.getString("ep$position")
+        holder.onBind(link)
 
     }
 
