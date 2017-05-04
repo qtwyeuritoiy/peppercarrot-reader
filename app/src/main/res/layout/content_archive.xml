@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<com.vlonjatg.progressactivity.ProgressRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/archive_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:weightSum="1"
     tools:context="nightlock.peppercarrot.fragments.ArchiveFragment"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="81dp"
-    android:weightSum="1">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:loadingBackgroundColor="#FFFFFF"
+    app:emptyBackgroundColor="#fbc02d"
+    app:errorBackgroundColor="#42a5f5">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -21,4 +24,4 @@
         tools:layout_editor_absoluteY="8dp"
         />
 
-</LinearLayout>
+</com.vlonjatg.progressactivity.ProgressRelativeLayout>

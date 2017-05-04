@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="nightlock.peppercarrot">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         xmlns:tools="http://schemas.android.com/tools"

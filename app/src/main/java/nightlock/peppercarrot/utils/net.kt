@@ -1,4 +1,4 @@
-package nightlock.peppercarrot.utils.net
+package nightlock.peppercarrot.utils
 
 import android.app.DownloadManager
 import android.content.Context
@@ -11,13 +11,13 @@ import okhttp3.Request
  */
 
 fun getEpisodeList(): List<String> {
-    var rawEpisodeList = getHtmlFromUrl("https://www.peppercarrot.com/0_sources/.episodes-list.md")
+    val rawEpisodeList = getHtmlFromUrl("https://www.peppercarrot.com/0_sources/.episodes-list.md")
     return rawEpisodeList.lines()
 }
 
 fun getHtmlFromUrl (url: String) : String {
     var client = OkHttpClient ()
-    var request = Request.Builder ()
+    var request = Request.Builder()
             .url (url)
             .build ()
 

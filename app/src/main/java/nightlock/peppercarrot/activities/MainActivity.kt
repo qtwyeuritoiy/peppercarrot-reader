@@ -14,7 +14,6 @@ import nightlock.peppercarrot.R
 import nightlock.peppercarrot.fragments.AboutFragment
 import nightlock.peppercarrot.fragments.ArchiveFragment
 import nightlock.peppercarrot.fragments.PreferenceFragment
-import nightlock.peppercarrot.utils.net.getEpisodeList
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -30,21 +29,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun checkInit() {
         val pref = getSharedPreferences("archive", Context.MODE_PRIVATE)
-        if (! pref.contains("episodeCount")){
-            val task = KillerTask(
-                    getEpisodeList(),
-                    {result: List<String> -> {
-                        val editor = pref.edit()
-                        editor.putInt("episodeCount", result.size)
-                        for (i in result.indices) {
-                            val str = result[i]
-                            editor.putString("ep$i", str)
-                        }
-                        editor.apply()
-                    }},
-                    {})
-            task.go()
-        }
         if (! pref.contains("jobId")){
         }
     }
