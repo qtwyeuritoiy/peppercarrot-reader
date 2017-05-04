@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     {})
             task.go()
         }
+        if (! pref.contains("jobId")){
+        }
     }
 
     private fun initToolbar(toolbar: Toolbar) {
