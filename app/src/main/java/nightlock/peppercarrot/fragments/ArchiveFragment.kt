@@ -29,8 +29,13 @@ class ArchiveFragment : Fragment(){
 
     private fun initRecyclerView(view: View) {
         val mRecycler = view.findViewById(R.id.archive_recycler) as RecyclerView
-        mRecycler.layoutManager = LinearLayoutManager(view.context)
-        mRecycler.adapter = ArchiveAdapter(view.context)
+        val context = view.context
+        mRecycler.layoutManager = LinearLayoutManager(context)
+
+        val adapter = ArchiveAdapter(context)
+        val itemCount = context.getSharedPreferences("archive", Context.MODE_PRIVATE).getInt("episodeCount",0)
+        adapter.notifyItemRangeInserted(0, itemCount)
+        mRecycler.adapter = adapter
     }
 
     private fun init(view : View) {
