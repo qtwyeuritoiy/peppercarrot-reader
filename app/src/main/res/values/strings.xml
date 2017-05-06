@@ -8,4 +8,8 @@
     <string name="title_activity_archive">ArchiveActivity</string>
     <string name="network_preference">Networks</string>
     <string name="download_on_mobile_network_preference">Download on Mobile Network</string>
+
+    <string name="title_activity_comic_viewer">ComicViewerActivity</string>
+    <string name="button_back">Previous</string>
+    <string name="button_forward">Next</string>
 </resources>
