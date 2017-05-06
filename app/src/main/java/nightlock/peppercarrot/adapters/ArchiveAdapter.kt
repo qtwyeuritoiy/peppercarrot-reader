@@ -2,7 +2,6 @@ package nightlock.peppercarrot.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.github.florent37.beautifulparallax.ParallaxViewController
 import nightlock.peppercarrot.viewholders.EpisodeViewHolder
 
 /**
