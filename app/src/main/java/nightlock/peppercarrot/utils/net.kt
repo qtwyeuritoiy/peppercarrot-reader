@@ -12,7 +12,7 @@ import okhttp3.Request
 
 fun getEpisodeList(): List<String> {
     val rawEpisodeList = getHtmlFromUrl("https://www.peppercarrot.com/0_sources/.episodes-list.md")
-    return rawEpisodeList.lines()
+    return rawEpisodeList.trim().lines()
 }
 
 fun getHtmlFromUrl (url: String) : String {

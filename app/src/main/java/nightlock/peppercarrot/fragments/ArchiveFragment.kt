@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.vlonjatg.progressactivity.ProgressRelativeLayout
 import io.github.mthli.sugartask.SugarTask
 import nightlock.peppercarrot.R
@@ -20,9 +23,13 @@ import nightlock.peppercarrot.utils.getEpisodeList
  */
 
 class ArchiveFragment : Fragment(){
+    val adapter = ArchiveAdapter()
+    var pref : SharedPreferences? = null
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.content_archive, container, false)
+        pref = context.getSharedPreferences("archive", Context.MODE_PRIVATE)
         init(view)
         return view
     }
@@ -31,42 +38,66 @@ class ArchiveFragment : Fragment(){
         val mRecycler = view.findViewById(R.id.archive_recycler) as RecyclerView
         val context = view.context
         mRecycler.layoutManager = LinearLayoutManager(context)
-
-        val adapter = ArchiveAdapter(context)
-        val itemCount = context.getSharedPreferences("archive", Context.MODE_PRIVATE).getInt("episodeCount",0)
-        adapter.notifyItemRangeInserted(0, itemCount)
         mRecycler.adapter = adapter
     }
 
     private fun init(view : View) {
         val progress = view.findViewById(R.id.archive_progress) as ProgressRelativeLayout
 
-        val pref = view.context.getSharedPreferences("archive", Context.MODE_PRIVATE)
-        if (! pref.contains("episodeCount"))
-            initArchive(progress, pref, view)
-        else
-            initRecyclerView(view)
+        initRecyclerView(view)
+        if (! pref!!.contains("episodeCount")) {
+            initArchive(progress, view)
+        } else {
+            Log.d("crystal_ball", "episodeCount available")
+            loaded(false)
+        }
     }
 
-    private fun initArchive(progress: ProgressRelativeLayout, pref: SharedPreferences, view: View) {
+    private fun loaded(initial : Boolean) {
+        for (i in 1..pref!!.getInt("episodeCount", 0)) {
+            val link = pref!!.getString("ep$i", "")
+            if (initial)
+                Glide
+                    .with(this)
+                    .load(link)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .preload()
+
+            adapter.addAndNotify(link)
+        }
+    }
+
+    private fun initArchive(progress: ProgressRelativeLayout, view: View) {
         progress.showLoading()
+
         SugarTask
                 .with(this)
                 .assign { ->
-                    val episodeList = getEpisodeList()
-                    val writer = pref.edit()
+                    val episodeList = getEpisodeList() //as List<String>
+                    val writer = pref!!.edit()
                     writer.putInt("episodeCount", episodeList.size)
 
                     for (i in episodeList.indices) {
-                        val episodeUrl = episodeList[i]
-                        writer.putString("ep$i", episodeUrl)
+                        val episode = episodeList[i]
+                        val count = i + 1
+                        val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/en_Pepper" +
+                                "-and-Carrot_by-David-Revoy_E${if (count<10) "0" else ""}$count.jpg"
+                        writer.putString("ep$count", link)
                     }
-                    writer.commit()
+                    writer.commit() //Should be blocked to ensure all of the content is added before invoking loaded()
                 }.finish { _ ->
                     progress.showContent()
-                    initRecyclerView(view)
+                    loaded(true)
                 }.broken { e ->
-                    progress.showError(R.drawable.ic_signal_wifi_off_black_24dp, "Network Error", "Connect to network and try again", "Retry", { _ -> initArchive(progress, pref, view)})
+                    onError(progress, view, e)
                 }.execute()
+    }
+
+    private fun onError(progress: ProgressRelativeLayout, view: View, e: Exception) {
+        progress.showError(R.drawable.ic_signal_wifi_off_black_24dp, "Network Error",
+                "Connect to network and try again", "Retry", { _ ->
+            initArchive(progress, view)
+        })
+        Log.e("crystal_ball", "Error on initArchive(): ${e.message}")
     }
 }

@@ -16,6 +16,7 @@ import nightlock.peppercarrot.fragments.ArchiveFragment
 import nightlock.peppercarrot.fragments.PreferenceFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    val fragmentList = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         initToolbar(toolbar)
         checkInit()
+        fragmentList.put(R.id.nav_archive, ArchiveFragment())
+        fragmentList.put(R.id.nav_settings, PreferenceFragment())
+        fragmentList.put(R.id.nav_about, AboutFragment())
+        swapFragment(fragmentList[R.id.nav_archive]!!)
     }
 
     private fun checkInit() {
@@ -56,11 +61,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
-        when (item.itemId) {
-            R.id.nav_archive -> swapFragment(ArchiveFragment())
-            R.id.nav_settings -> swapFragment(PreferenceFragment())
-            R.id.nav_about -> swapFragment(AboutFragment())
-        }
+        swapFragment(fragmentList[item.itemId]!!)
 
         // Closes drawer.
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
