@@ -1,16 +1,21 @@
 package nightlock.peppercarrot.activities
 
 import android.annotation.SuppressLint
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
-import android.view.MotionEvent
-import android.view.View
-import android.view.MenuItem
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.NavUtils
-
+import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import android.view.View
+import android.widget.ImageButton
+import com.github.piasy.biv.BigImageViewer
+import com.github.piasy.biv.loader.glide.GlideImageLoader
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
 import nightlock.peppercarrot.R
+import nightlock.peppercarrot.adapters.ComicViewerAdapter
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -18,7 +23,6 @@ import nightlock.peppercarrot.R
  */
 class ComicViewerActivity : AppCompatActivity() {
     private val mHideHandler = Handler()
-    private var mContentView: View? = null
     private val mHidePart2Runnable = Runnable {
         // Delayed removal of status and navigation bar
 
@@ -47,12 +51,27 @@ class ComicViewerActivity : AppCompatActivity() {
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private val mDelayHideTouchListener = View.OnTouchListener { _, _ ->
-        if (AUTO_HIDE) {
-            delayedHide(AUTO_HIDE_DELAY_MILLIS)
-        }
+    private val mDelayHideTouch = { ->
+        if (AUTO_HIDE) delayedHide(AUTO_HIDE_DELAY_MILLIS)
         false
     }
+    /**
+     * The [android.support.v4.view.PagerAdapter] that will provide
+     * fragments for each of the sections. We use a
+     * [FragmentPagerAdapter] derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * [android.support.v4.app.FragmentStatePagerAdapter].
+     */
+    private var mComicViewerAdapter: ComicViewerAdapter? = null
+
+    /**
+     * The [ViewPager] that will host the section contents.
+     */
+    private var mContentView: RecyclerViewPager? = null
+
+    private var mBackButton: ImageButton? = null
+    private var mForwardButton: ImageButton? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +82,10 @@ class ComicViewerActivity : AppCompatActivity() {
 
         mVisible = true
         mControlsView = findViewById(R.id.fullscreen_content_controls)
-        mContentView = findViewById(R.id.comic_webview)
 
+        // Set up the ViewPager with the sections adapter.
+        mContentView = findViewById(R.id.comic_viewpager) as RecyclerViewPager
+        mContentView!!.adapter = mComicViewerAdapter
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView!!.setOnClickListener { toggle() }
@@ -72,8 +93,35 @@ class ComicViewerActivity : AppCompatActivity() {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.button_back).setOnTouchListener(mDelayHideTouchListener)
-        findViewById(R.id.button_forward).setOnTouchListener(mDelayHideTouchListener)
+        mBackButton = findViewById(R.id.button_back) as ImageButton
+        mForwardButton = findViewById(R.id.button_forward) as ImageButton
+
+        mBackButton!!.setOnTouchListener{ _, _ ->
+            mDelayHideTouch()
+        }
+
+        mForwardButton!!.setOnTouchListener{ _, _ ->
+            mDelayHideTouch()
+        }
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mComicViewerAdapter = ComicViewerAdapter()
+
+        BigImageViewer.initialize(GlideImageLoader.with(applicationContext))
+    }
+
+    private fun loadComic(episodeNumber: Int) {
+        val sharedPref = getSharedPreferences("archive", Context.MODE_PRIVATE)
+
+        val episode = sharedPref.getString("ep$episodeNumber", "")
+        val locale = sharedPref.getString("locale$episode", "en")
+
+        val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/single-page/$locale" +
+                "_Pepper-and-Carrot_by-David-Revoy_E${if (episodeNumber<10) "0" else ""}" +
+                "${episodeNumber}P01.jpg"
+
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
