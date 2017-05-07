@@ -1,15 +1,14 @@
 package nightlock.peppercarrot.viewholders
 
-import android.graphics.Bitmap
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
 import nightlock.peppercarrot.R
+import nightlock.peppercarrot.activities.ComicViewerActivity
 
 /**
  * Created by nightlock on 5/2/17.
@@ -18,6 +17,15 @@ import nightlock.peppercarrot.R
 class EpisodeViewHolder private constructor(v: View): RecyclerView.ViewHolder(v){
     val imageView : ImageView =
             v.findViewById(R.id.episode_image) as ImageView
+    val context = imageView.context
+    var ep = 0
+    init {
+        imageView.setOnClickListener {
+            val intent = Intent(context, ComicViewerActivity::class.java)
+            intent.putExtra("ep", ep)
+            context.startActivity(intent)
+        }
+    }
 
     object Factory{
         fun newInstance(viewGroup: ViewGroup) : EpisodeViewHolder {
@@ -28,17 +36,12 @@ class EpisodeViewHolder private constructor(v: View): RecyclerView.ViewHolder(v)
         }
     }
 
-    fun onBind(imgLink: String) {
+    fun onBind(imgLink: String, ep: Int) {
         Glide
-                .with(imageView.context)
+                .with(context)
                 .load(imgLink)
                 .fitCenter()
-                /*.asBitmap()
-        .into(object : SimpleTarget<Bitmap>(992, 690) {
-            override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
-                imageView.setImageBitmap(resource)
-            }
-        })*/
                 .into(imageView)
+        this.ep = ep
     }
 }

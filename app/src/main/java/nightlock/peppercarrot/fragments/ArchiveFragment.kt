@@ -16,6 +16,7 @@ import com.vlonjatg.progressactivity.ProgressRelativeLayout
 import io.github.mthli.sugartask.SugarTask
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.adapters.ArchiveAdapter
+import nightlock.peppercarrot.utils.getAvailablePreferredLocale
 import nightlock.peppercarrot.utils.getEpisodeList
 
 /**
@@ -55,7 +56,11 @@ class ArchiveFragment : Fragment(){
 
     private fun loaded(initial : Boolean) {
         for (i in 1..pref!!.getInt("episodeCount", 0)) {
-            val link = pref!!.getString("ep$i", "")
+            val episode = pref!!.getString("ep$i", "")
+            val locale = pref!!.getString("locale$i", "en")
+            val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/$locale" +
+                    "_Pepper-and-Carrot_by-David-Revoy_E${if (i<10) "0" else ""}$i.jpg"
+
             if (initial)
                 Glide
                     .with(this)
@@ -79,10 +84,11 @@ class ArchiveFragment : Fragment(){
 
                     for (i in episodeList.indices) {
                         val episode = episodeList[i]
-                        val count = i + 1
-                        val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/en_Pepper" +
-                                "-and-Carrot_by-David-Revoy_E${if (count<10) "0" else ""}$count.jpg"
-                        writer.putString("ep$count", link)
+                        val count = i+1
+                        val locale = getAvailablePreferredLocale(episode)
+
+                        writer.putString("ep$count", episode)
+                        writer.putString("locale$count", locale)
                     }
                     writer.commit() //Should be blocked to ensure all of the content is added before invoking loaded()
                 }.finish { _ ->

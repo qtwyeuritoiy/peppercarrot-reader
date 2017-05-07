@@ -20,7 +20,7 @@ class ArchiveAdapter: RecyclerView.Adapter<EpisodeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: EpisodeViewHolder, position: Int) {
-        holder.onBind(linkList[position])
+        holder.onBind(linkList[position], position + 1)
     }
 
     fun addAndNotify(link: String) {

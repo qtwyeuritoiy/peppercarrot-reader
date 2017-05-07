@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import java.util.*
 
 /**
  * Created by qtwye on 2017-05-03.
@@ -23,6 +24,17 @@ fun getHtmlFromUrl (url: String) : String {
 
     var response = client.newCall (request).execute ()
     return response.body ().string ()
+}
+
+fun getAvailablePreferredLocale(episode: String): String {
+    val rawEpisode = getHtmlFromUrl("https://www.peppercarrot.com/0_sources/$episode/low-res/single-page/")
+
+    for (locale: Locale in Locale.getAvailableLocales()){
+        if (rawEpisode.contains(locale.language))
+            return locale.language
+    }
+
+    return "en"
 }
 
 fun requestAsyncDownload(context: Context, dest: String, url: String, mimeType: String) : Long {

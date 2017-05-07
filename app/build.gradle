@@ -50,9 +50,13 @@ dependencies {
     compile 'com.android.support:percent:25.3.1'
     compile 'com.android.support:preference-v14:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
+
     compile 'com.evernote:android-job:1.1.10'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.lsjwzh.RecyclerViewPager:lib:v1.1.2'
     compile 'com.github.mthli:SugarTask:v0.4'
+    compile 'com.github.piasy:BigImageViewer:1.2.9'
+    compile 'com.github.piasy:GlideImageLoader:1.2.9'
     compile 'com.github.square:okhttp:parent-3.5.0'
     compile 'com.github.vlonjatg:progress-activity:v2.0.3'
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-2'
