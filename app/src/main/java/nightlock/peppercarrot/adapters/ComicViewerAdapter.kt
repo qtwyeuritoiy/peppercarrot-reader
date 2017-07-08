@@ -8,7 +8,7 @@ import nightlock.peppercarrot.viewholders.ComicViewHolder
  * Created by nightlock on 5/7/17.
  */
 
-class ComicViewerAdapter(val pageCount: Int, episode: String) :
+class ComicViewerAdapter(val pageCount: Int, link: String) :
         RecyclerView.Adapter<ComicViewHolder>() {
     init{
 
