@@ -96,13 +96,8 @@ class ComicViewerActivity : AppCompatActivity() {
         mBackButton = findViewById(R.id.button_back) as ImageButton
         mForwardButton = findViewById(R.id.button_forward) as ImageButton
 
-        mBackButton!!.setOnTouchListener{ _, _ ->
-            mDelayHideTouch()
-        }
-
-        mForwardButton!!.setOnTouchListener{ _, _ ->
-            mDelayHideTouch()
-        }
+        mBackButton!!.setOnTouchListener { _, _ -> mDelayHideTouch() }
+        mForwardButton!!.setOnTouchListener { _, _ -> mDelayHideTouch() }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
