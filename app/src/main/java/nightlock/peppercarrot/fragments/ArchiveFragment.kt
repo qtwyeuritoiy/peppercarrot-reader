@@ -1,7 +1,5 @@
 package nightlock.peppercarrot.fragments
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -16,21 +14,21 @@ import com.vlonjatg.progressactivity.ProgressRelativeLayout
 import io.github.mthli.sugartask.SugarTask
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.adapters.ArchiveAdapter
-import nightlock.peppercarrot.utils.getAvailablePreferredLocale
-import nightlock.peppercarrot.utils.getEpisodeList
+import nightlock.peppercarrot.utils.ArchiveDataManager
 
 /**
+ * Fragment holding list of comic episodes
  * Created by nightlock on 4/30/17.
  */
 
 class ArchiveFragment : Fragment(){
     val adapter = ArchiveAdapter()
-    var pref : SharedPreferences? = null
+    var db: ArchiveDataManager? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.content_archive, container, false)
-        pref = context.getSharedPreferences("archive", Context.MODE_PRIVATE)
+        db = ArchiveDataManager(context.applicationContext)
         init(view)
         return view
     }
@@ -46,7 +44,7 @@ class ArchiveFragment : Fragment(){
         val progress = view.findViewById(R.id.archive_progress) as ProgressRelativeLayout
 
         initRecyclerView(view)
-        if (! pref!!.contains("episodeCount")) {
+        if (db!!.length() < 1) {
             initArchive(progress, view)
         } else {
             Log.d("crystal_ball", "episodeCount available")
@@ -55,11 +53,12 @@ class ArchiveFragment : Fragment(){
     }
 
     private fun loaded(initial : Boolean) {
-        for (i in 1..pref!!.getInt("episodeCount", 0)) {
-            val episode = pref!!.getString("ep$i", "")
-            val locale = pref!!.getString("locale$i", "en")
-            val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/$locale" +
-                    "_Pepper-and-Carrot_by-David-Revoy_E${if (i<10) "0" else ""}$i.jpg"
+        for (episode in db!!.getAllEpisode()) {
+            val name = episode.name
+            val index = episode.index + 1
+            val locale = "en" //Temporary workaround; should be omitted upon release.
+            val link = "https://www.peppercarrot.com/0_sources/$name/low-res/$locale" +
+                    "_Pepper-and-Carrot_by-David-Revoy_E${if (index < 10) "0" else ""}$index.jpg"
 
             if (initial)
                 Glide
@@ -68,7 +67,7 @@ class ArchiveFragment : Fragment(){
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .preload()
 
-            adapter.addAndNotify(link)
+            adapter.addAndNotify(episode)
         }
     }
 
@@ -77,20 +76,8 @@ class ArchiveFragment : Fragment(){
 
         SugarTask
                 .with(this)
-                .assign { ->
-                    val episodeList = getEpisodeList() //as List<String>
-                    val writer = pref!!.edit()
-                    writer.putInt("episodeCount", episodeList.size)
-
-                    for (i in episodeList.indices) {
-                        val episode = episodeList[i]
-                        val count = i+1
-                        val locale = getAvailablePreferredLocale(episode)
-
-                        writer.putString("ep$count", episode)
-                        writer.putString("locale$count", locale)
-                    }
-                    writer.commit() //Should be blocked to ensure all of the content is added before invoking loaded()
+                .assign {
+                    ArchiveDataManager.updateArchive(context.applicationContext)
                 }.finish { _ ->
                     progress.showContent()
                     loaded(true)
@@ -104,6 +91,7 @@ class ArchiveFragment : Fragment(){
                 "Connect to network and try again", "Retry", { _ ->
             initArchive(progress, view)
         })
-        Log.e("crystal_ball", "Error on initArchive(): ${e.message}")
+        Log.e("crystal_ball", "Error on initArchive()")
+        e.printStackTrace()
     }
 }

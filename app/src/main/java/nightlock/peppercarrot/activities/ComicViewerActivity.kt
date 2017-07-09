@@ -1,13 +1,13 @@
 package nightlock.peppercarrot.activities
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.NavUtils
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
@@ -82,10 +82,10 @@ class ComicViewerActivity : AppCompatActivity() {
 
         mVisible = true
         mControlsView = findViewById(R.id.fullscreen_content_controls)
-
-        // Set up the ViewPager with the sections adapter.
+        // https://www.peppercarrot.com/0_sources/ep07_The-Wish/low-res/single-page/en_Pepper-and-Carrot_by-David-Revoy_E07XXL.jpg
+        // https://www.peppercarrot.com/0_sources/ep07_The-Wish/low-res/single-page/en_Pepper-and-Carrot_by-David-Revoy_E06P01.jpg
+        // Set up the RecyclerViewPager with the ComicViewerAdapter.
         mContentView = findViewById(R.id.comic_viewpager) as RecyclerViewPager
-        mContentView!!.adapter = mComicViewerAdapter
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView!!.setOnClickListener { toggle() }
@@ -101,22 +101,16 @@ class ComicViewerActivity : AppCompatActivity() {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mComicViewerAdapter = ComicViewerAdapter()
+
+        val index = intent.getIntExtra("ep", 0)
+
+        mComicViewerAdapter = ComicViewerAdapter(applicationContext, index)
+
+        mComicViewerAdapter!!.notifyDataSetChanged()
+        mContentView!!.adapter = mComicViewerAdapter
+        mContentView!!.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         BigImageViewer.initialize(GlideImageLoader.with(applicationContext))
-    }
-
-    private fun loadComic(episodeNumber: Int) {
-        val sharedPref = getSharedPreferences("archive", Context.MODE_PRIVATE)
-
-        val episode = sharedPref.getString("ep$episodeNumber", "")
-        val locale = sharedPref.getString("locale$episode", "en")
-
-        val link = "https://www.peppercarrot.com/0_sources/$episode/low-res/single-page/$locale" +
-                "_Pepper-and-Carrot_by-David-Revoy_E${if (episodeNumber<10) "0" else ""}" +
-                "${episodeNumber}P01.jpg"
-
-
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
