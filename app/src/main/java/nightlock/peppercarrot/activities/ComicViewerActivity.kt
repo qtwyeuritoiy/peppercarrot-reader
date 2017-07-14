@@ -82,8 +82,6 @@ class ComicViewerActivity : AppCompatActivity() {
 
         mVisible = true
         mControlsView = findViewById(R.id.fullscreen_content_controls)
-        // https://www.peppercarrot.com/0_sources/ep07_The-Wish/low-res/single-page/en_Pepper-and-Carrot_by-David-Revoy_E07XXL.jpg
-        // https://www.peppercarrot.com/0_sources/ep07_The-Wish/low-res/single-page/en_Pepper-and-Carrot_by-David-Revoy_E06P01.jpg
         // Set up the RecyclerViewPager with the ComicViewerAdapter.
         mContentView = findViewById(R.id.comic_viewpager) as RecyclerViewPager
 
