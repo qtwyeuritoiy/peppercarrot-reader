@@ -25,3 +25,30 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.lsjwzh.widget.recyclerviewpager.**
 -dontwarn com.lsjwzh.widget.recyclerviewpager.**
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+
+-dontwarn com.squareup.okhttp.**
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.AppGlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+-dontwarn com.google.**
+-dontwarn com.sun.jersey.**
+-dontwarn io.netty.**
+-dontwarn net.sf.cglib.**
+-dontwarn okhttp3.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.joda.time.**
+-dontwarn org.junit.**
+-dontwarn junit.**

@@ -8,7 +8,7 @@ android {
         applicationId "nightlock.peppercarrot"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 0
+        versionCode 1
         versionName "0.9.0b"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,6 +19,9 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    configurations {
+        all*.exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
     packagingOptions {
         exclude 'META-INF/NOTICE'
@@ -39,7 +42,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -53,7 +55,7 @@ dependencies {
     compile 'com.github.mthli:SugarTask:v0.4'
     compile 'com.github.piasy:BigImageViewer:1.2.9'
     compile 'com.github.piasy:GlideImageLoader:1.2.9'
-    compile 'com.github.square:okhttp:parent-3.5.0'
+    compile 'com.github.square:okhttp:parent-3.6.0'
     compile 'com.github.vlonjatg:progress-activity:v2.0.3'
     compile 'io.hypertrack:smart-scheduler:0.0.8'
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.3'
