@@ -5,7 +5,8 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import nightlock.peppercarrot.R
 
 /**
- * Created by nightlock on 4/30/17.
+ * Fragment for Settings
+ * Created by Jihoon Kim on 4/30/17.
  */
 
 class PreferenceFragment : PreferenceFragmentCompat(){

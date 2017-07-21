@@ -10,7 +10,7 @@ import nightlock.peppercarrot.R
 
 /**
  * ViewHolder that has a single ImageView for showing a comic page.
- * Created by nightlock on 5/7/17.
+ * Created by Jihoon Kim on 5/7/17.
  */
 class ComicViewHolder private constructor(v: View): RecyclerView.ViewHolder(v){
     val imageView : BigImageView =

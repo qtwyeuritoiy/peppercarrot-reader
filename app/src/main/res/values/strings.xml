@@ -14,4 +14,6 @@
     <string name="button_forward">Next</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="previous_episode">Previous Episode</string>
+    <string name="next_episode">Next Episode</string>
 </resources>

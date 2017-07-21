@@ -5,8 +5,8 @@ import okhttp3.Request
 import org.json.JSONArray
 
 /**
- * Utilities for network tasks.
- * Created by qtwye on 2017-05-03.
+ * Utility functions for network tasks.
+ * Created by Jihoon Kim on 2017-05-03.
  */
 
 fun getEpisodeList(): List<Episode> {

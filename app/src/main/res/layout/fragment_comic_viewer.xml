@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="nightlock.peppercarrot.fragments.ComicViewerFragment">
+    tools:context="nightlock.peppercarrot.activities.ComicViewerActivity">
 
     <com.github.piasy.biv.view.BigImageView
         android:id="@+id/comic_image"

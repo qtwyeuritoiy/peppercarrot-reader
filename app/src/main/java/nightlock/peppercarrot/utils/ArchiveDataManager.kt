@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 /**
  * SQLite Database Helper Class
- * Created by graphene on 05/06/17.
+ * Created by Jihoon Kim on 05/06/17.
  */
 class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
@@ -105,6 +105,7 @@ class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     fun getTotalPageCount(): Int {
         var pageCount = 0
+
         val db = readableDatabase
         val cursor = db.rawQuery(SQL_SELECT_ALL, null)
 

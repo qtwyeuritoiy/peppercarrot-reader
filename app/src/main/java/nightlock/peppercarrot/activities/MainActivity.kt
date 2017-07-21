@@ -14,7 +14,6 @@ import io.hypertrack.smart_scheduler.SmartScheduler
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.fragments.AboutFragment
 import nightlock.peppercarrot.fragments.ArchiveFragment
-import nightlock.peppercarrot.fragments.PreferenceFragment
 import nightlock.peppercarrot.utils.ArchiveDataManager
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Put Fragments into the list and load ArchiveFragment on FrameLayout
         fragmentList.put(R.id.nav_archive, ArchiveFragment())
-        fragmentList.put(R.id.nav_settings, PreferenceFragment())
+        //fragmentList.put(R.id.nav_settings, PreferenceFragment())
         fragmentList.put(R.id.nav_about, AboutFragment())
         swapFragment(fragmentList[R.id.nav_archive]!!)
     }

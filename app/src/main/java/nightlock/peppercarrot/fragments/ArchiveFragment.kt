@@ -15,10 +15,11 @@ import io.github.mthli.sugartask.SugarTask
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.adapters.ArchiveAdapter
 import nightlock.peppercarrot.utils.ArchiveDataManager
+import nightlock.peppercarrot.utils.getCoverImageUrl
 
 /**
  * Fragment holding list of comic episodes
- * Created by nightlock on 4/30/17.
+ * Created by Jihoon Kim on 4/30/17.
  */
 
 class ArchiveFragment : Fragment(){
@@ -44,9 +45,9 @@ class ArchiveFragment : Fragment(){
         val progress = view.findViewById(R.id.archive_progress) as ProgressRelativeLayout
 
         initRecyclerView(view)
-        if (db!!.length() < 1) {
+        if (db!!.length() < 1)
             initArchive(progress, view)
-        } else {
+        else {
             Log.d("crystal_ball", "episodeCount available")
             loaded(false)
         }
@@ -54,16 +55,10 @@ class ArchiveFragment : Fragment(){
 
     private fun loaded(initial : Boolean) {
         for (episode in db!!.getAllEpisode()) {
-            val name = episode.name
-            val index = episode.index + 1
-            val locale = "en" //Temporary workaround; should be omitted upon release.
-            val link = "https://www.peppercarrot.com/0_sources/$name/low-res/$locale" +
-                    "_Pepper-and-Carrot_by-David-Revoy_E${if (index < 10) "0" else ""}$index.jpg"
-
             if (initial)
                 Glide
                     .with(this)
-                    .load(link)
+                        .load(getCoverImageUrl(episode))
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .preload()
 

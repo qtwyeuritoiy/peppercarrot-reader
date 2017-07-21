@@ -7,7 +7,7 @@ import nightlock.peppercarrot.viewholders.EpisodeViewHolder
 
 /**
  * Adapter for Displaying EpisodeViewHolder
- * Created by nightlock on 5/2/17.
+ * Created by Jihoon Kim on 5/2/17.
  */
 
 class ArchiveAdapter: RecyclerView.Adapter<EpisodeViewHolder>() {

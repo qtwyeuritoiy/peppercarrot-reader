@@ -13,7 +13,7 @@ import nightlock.peppercarrot.utils.Episode
 
 /**
  * ViewHolder for containing the episode cover.
- * Created by nightlock on 5/2/17.
+ * Created by Jihoon Kim on 5/2/17.
  */
 
 class EpisodeViewHolder private constructor(v: View): RecyclerView.ViewHolder(v){
