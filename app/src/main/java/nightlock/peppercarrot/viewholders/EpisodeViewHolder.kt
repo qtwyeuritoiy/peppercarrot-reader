@@ -10,6 +10,8 @@ import com.bumptech.glide.Glide
 import nightlock.peppercarrot.R
 import nightlock.peppercarrot.activities.ComicViewerActivity
 import nightlock.peppercarrot.utils.Episode
+import nightlock.peppercarrot.utils.getPreferredLanguage
+import java.util.*
 
 /**
  * ViewHolder for containing the episode cover.
@@ -32,7 +34,7 @@ class EpisodeViewHolder private constructor(v: View): RecyclerView.ViewHolder(v)
     fun onBind(episode: Episode) {
         val name = episode.name
         val index = episode.index + 1
-        val locale = "en" //Temporary workaround; should be omitted upon release.
+        val locale = getPreferredLanguage(episode.supported_languages)
         val link = "https://www.peppercarrot.com/0_sources/$name/low-res/$locale" +
                 "_Pepper-and-Carrot_by-David-Revoy_E${if (index < 10) "0" else ""}$index.jpg"
         Glide
