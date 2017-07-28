@@ -1,26 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+    Copyright (C) 2017 Jihoon Kim <imsesaok@gmail.com, imsesaok@tuta.io>
+
+    This file is part of Reader for Pepper&Carrot.
+
+    Reader for Pepper&Carrot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    -->
 <android.support.percent.PercentFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app ="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp">
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/episode_card_view"
-        android:elevation="6dp"
         android:layout_gravity="center_horizontal"
-        app:layout_widthPercent="95%"
-        app:layout_aspectRatio="140%"
+        android:elevation="6dp"
         app:cardCornerRadius="6dp"
+        app:layout_aspectRatio="140%"
+        app:layout_widthPercent="95%"
         tools:targetApi="lollipop">
 
         <ImageView
+            android:id="@+id/episode_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/episode_image"
             android:scaleType="centerCrop"/>
 
     </android.support.v7.widget.CardView>

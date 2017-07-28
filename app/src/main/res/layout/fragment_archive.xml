@@ -16,27 +16,29 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     -->
-<android.support.v4.widget.DrawerLayout
+<com.vlonjatg.progressactivity.ProgressRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/archive_progress"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:orientation="vertical"
+    android:weightSum="1"
+    app:emptyBackgroundColor="#fbc02d"
+    app:errorBackgroundColor="#42a5f5"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:loadingBackgroundColor="#FFFFFF"
+    tools:context="nightlock.peppercarrot.fragments.ArchiveFragment"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <include
-        layout="@layout/app_bar_main"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/archive_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/activity_main_drawer"/>
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        />
 
-</android.support.v4.widget.DrawerLayout>
+</com.vlonjatg.progressactivity.ProgressRelativeLayout>
