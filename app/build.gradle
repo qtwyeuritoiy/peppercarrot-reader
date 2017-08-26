@@ -26,8 +26,8 @@ android {
         applicationId "nightlock.peppercarrot"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 3
-        versionName "0.9.1b"
+        versionCode 4
+        versionName "0.9.2b"
         multiDexEnabled true
     }
     buildTypes {
