@@ -24,6 +24,7 @@ import android.os.Handler
 import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
@@ -84,8 +85,6 @@ class ComicViewerActivity : AppCompatActivity() {
         contentView = findViewById(R.id.comic_viewpager) as RecyclerViewPager
         rootFrame = findViewById(R.id.comic_viewer_frame) as FrameLayout
 
-        rootFrame.setOnClickListener { toggle() }
-
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
@@ -111,6 +110,11 @@ class ComicViewerActivity : AppCompatActivity() {
         delayedHide(100)
     }
 
+    override fun onResume() {
+        super.onResume()
+        delayedHide(100)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == android.R.id.home) {
@@ -120,7 +124,7 @@ class ComicViewerActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun toggle() = if (visibility) hide() else show()
+    fun toggle() = if (visibility) hide() else show()
 
     private fun hide() {
         val actionBar = supportActionBar
@@ -138,6 +142,7 @@ class ComicViewerActivity : AppCompatActivity() {
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         visibility = true
+        Log.d("crystal_ball", "show()")
 
         hideHandler.removeCallbacks(hidePart2Runnable)
         hideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY.toLong())

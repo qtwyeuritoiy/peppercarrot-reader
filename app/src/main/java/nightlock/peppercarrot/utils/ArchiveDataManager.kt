@@ -31,18 +31,18 @@ import android.database.sqlite.SQLiteOpenHelper
 class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         val DATABASE_NAME = "episodeDB.db"
-        val DATABASE_VERSION = 1
-        val JOB_ID = 1337
-        val JOB_PERIODIC_TASK_TAG = "nightlock.peppercarrot.utils.ArchiveDataManager"
+        val DATABASE_VERSION = 4
         val TABLE_NAME = "episodeEntry"
         val COLUMN_NAME_INDEX = "_id"
         val COLUMN_NAME_NAME = "name"
         val COLUMN_NAME_PAGES = "pages"
-        val COLUMN_NAME_LANGUAGES = "languages"
+        val COLUMN_NAME_PNC_LANGUAGES = "pnc_languages"
+        val COLUMN_NAME_ISO_LANGUAGES = "iso_languages"
 
         val SQL_CREATE_ENTRIES = "CREATE TABLE $TABLE_NAME($COLUMN_NAME_INDEX" +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_NAME_NAME TEXT," +
-                " $COLUMN_NAME_PAGES INTEGER, $COLUMN_NAME_LANGUAGES TEXT)"
+                " $COLUMN_NAME_PAGES INTEGER, $COLUMN_NAME_PNC_LANGUAGES TEXT," +
+                "$COLUMN_NAME_ISO_LANGUAGES TEXT)"
         val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS $TABLE_NAME"
         val SQL_SELECT_ALL = "SELECT * FROM $TABLE_NAME"
 
@@ -70,7 +70,8 @@ class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_
         values.put(COLUMN_NAME_INDEX, episode.index)
         values.put(COLUMN_NAME_NAME, episode.name)
         values.put(COLUMN_NAME_PAGES, episode.pages)
-        values.put(COLUMN_NAME_LANGUAGES, episode.supported_languages.joinToString(separator = ","))
+        values.put(COLUMN_NAME_PNC_LANGUAGES, episode.supported_languages.joinToString(separator = ","))
+        values.put(COLUMN_NAME_ISO_LANGUAGES, episode.supported_iso_languages.joinToString(separator = ","))
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -93,7 +94,8 @@ class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 COLUMN_NAME_INDEX,
                 COLUMN_NAME_NAME,
                 COLUMN_NAME_PAGES,
-                COLUMN_NAME_LANGUAGES
+                COLUMN_NAME_PNC_LANGUAGES,
+                COLUMN_NAME_ISO_LANGUAGES
         ), "$COLUMN_NAME_INDEX = ?", arrayOf(index.toString()), null, null, null, null)
 
         cursor.moveToFirst()
@@ -105,9 +107,10 @@ class ArchiveDataManager(context: Context) : SQLiteOpenHelper(context, DATABASE_
         val index = cursor.getInt(0)
         val name = cursor.getString(1)
         val pages = cursor.getInt(2)
-        val langs = cursor.getString(3).split(",")
+        val pncLangs = cursor.getString(3).split(",")
+        val isoLangs = cursor.getString(4).split(",")
 
-        return Episode(index, name, pages, langs)
+        return Episode(index, name, pages, pncLangs, isoLangs)
     }
 
     fun getAllEpisode(): List<Episode> {

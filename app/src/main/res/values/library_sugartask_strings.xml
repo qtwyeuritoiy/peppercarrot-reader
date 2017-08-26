@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="define_sugartask"></string>
+    <!-- Author section -->
+    <string name="library_sugartask_author">mthli</string>
+    <string name="library_sugartask_authorWebsite"></string>
+    <!-- Library section -->
+    <string name="library_sugartask_libraryName">SugarTask</string>
+    <string name="library_sugartask_libraryDescription">Android lifecycle safety task with sugar code style.</string>
+    <string name="library_sugartask_libraryWebsite"></string>
+    <string name="library_sugartask_libraryVersion">0.4</string>
+    <!-- OpenSource section -->
+    <string name="library_sugartask_isOpenSource">true</string>
+    <string name="library_sugartask_repositoryLink">https://github.com/mthli/SugarTask</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_sugartask_classPath">com.github.mthli.SugarTask</string>
+    <!-- License section -->
+    <string name="library_sugartask_licenseId">apache_2_0</string>
+    <!-- Custom variables section -->
+</resources>

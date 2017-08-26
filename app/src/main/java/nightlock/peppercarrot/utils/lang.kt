@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Jihoon Kim <imsesaok@gmail.com, imsesaok@tuta.io>
+ * Copyright (C) 2017 Jihoon Kim <imsesaok@gmail.com, imsesaok@tuta.io>, Valvin
  *
  * This file is part of Reader for Pepper&Carrot.
  *
@@ -25,17 +25,17 @@ import java.util.*
  * Utility functions for multi-language support.
  * Created by Jihoon Kim on 20/07/17.
  */
-fun getPreferredLanguage(available_languages: List<String>): String {
-
-    var locale:Locale = Locale.getDefault()
+fun getPreferredLanguage(episode: Episode): String {
+    val locale: Locale = Locale.getDefault()
+    Log.d("crystal_ball", locale.language)
 
     //if device default locale is not available return english
-    if(available_languages.none { Locale(it).language.equals(locale.language) } ){
-        return Locale.US.language
+    for (i in 0 until episode.supported_languages.size) {
+        val pncLocale = episode.supported_languages[i]
+        val isoLocale = episode.supported_iso_languages[i]
+        if (locale.language == Locale(isoLocale).language) {
+            return pncLocale
+        }
     }
-    else{
-        return locale.language
-    }
-
-
+    return Locale.US.language
 }
