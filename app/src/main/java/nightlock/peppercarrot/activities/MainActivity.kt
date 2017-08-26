@@ -18,7 +18,12 @@
  */
 package nightlock.peppercarrot.activities
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -27,12 +32,11 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import io.hypertrack.smart_scheduler.Job
-import io.hypertrack.smart_scheduler.SmartScheduler
+import com.mikepenz.aboutlibraries.LibsBuilder
+import nightlock.peppercarrot.AlarmReceiver
 import nightlock.peppercarrot.R
-import nightlock.peppercarrot.fragments.AboutFragment
 import nightlock.peppercarrot.fragments.ArchiveFragment
-import nightlock.peppercarrot.utils.ArchiveDataManager
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     val fragmentList = HashMap<Int, Fragment>()
@@ -48,24 +52,21 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun checkAndInit() {
-        val jobScheduler = SmartScheduler.getInstance(applicationContext)
-        if (jobScheduler.contains(ArchiveDataManager.JOB_ID)) {
-            val jobBuilder = Job.Builder(ArchiveDataManager.JOB_ID, { context, job ->
-                if (job != null) ArchiveDataManager.updateArchive(context)
-            }, ArchiveDataManager.JOB_PERIODIC_TASK_TAG)
-                    .setRequiredNetworkType(Job.NetworkType.NETWORK_TYPE_UNMETERED)
-                    .setRequiresCharging(false)
-                    .setPeriodic(1000 * 60 * 60 * 8) //Since P&C update is out on nearly monthly basis, we don't need to check most of the time.
-                    .setFlex(1000 * 60 * 60 * 12)
+        val manager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(applicationContext, AlarmReceiver::class.java)
+        val pending = PendingIntent.getBroadcast(applicationContext, 0, intent, 0)
 
-            val job = jobBuilder.build()
-            jobScheduler.addJob(job)
-        }
+        manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime(), AlarmManager.INTERVAL_HALF_DAY, pending)
 
         //Put Fragments into the list and load ArchiveFragment on FrameLayout
         fragmentList.put(R.id.nav_archive, ArchiveFragment())
         //fragmentList.put(R.id.nav_settings, PreferenceFragment())
-        fragmentList.put(R.id.nav_about, AboutFragment())
+        fragmentList.put(R.id.nav_about, LibsBuilder()
+                .withAboutIconShown(true)
+                .withAboutVersionShown(true)
+                .withAboutDescription("An Unofficial Reader App for Pepper & Carrot, Comic Created with FLOSS.")
+                .supportFragment())
 
         swapFragment(fragmentList[R.id.nav_archive]!!)
     }

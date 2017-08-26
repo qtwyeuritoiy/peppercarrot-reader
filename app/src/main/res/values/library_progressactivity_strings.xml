@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="define_progressactivity"></string>
+    <!-- Author section -->
+    <string name="library_progressactivity_author">vlonjatg</string>
+    <string name="library_progressactivity_authorWebsite">https://github.com/vlonjatg/</string>
+    <!-- Library section -->
+    <string name="library_progressactivity_libraryName">Progress Activity</string>
+    <string name="library_progressactivity_libraryDescription">If you are tired of constantly having to set up progress bars, empty views and error views, than this library is for you.</string>
+    <string name="library_progressactivity_libraryWebsite">https://github.com/vlonjatg/progress-activity</string>
+    <string name="library_progressactivity_libraryVersion">1.0.3</string>
+    <!-- OpenSource section -->
+    <string name="library_progressactivity_isOpenSource">true</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_progressactivity_classPath">com.vlonjatg.progressactivity</string>
+    <!-- License section -->
+    <string name="library_progressactivity_licenseId">mit</string>
+    <!-- Custom variables section -->
+</resources>
+

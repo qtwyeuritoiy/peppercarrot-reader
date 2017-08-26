@@ -52,3 +52,8 @@
 -dontwarn org.joda.time.**
 -dontwarn org.junit.**
 -dontwarn junit.**
+
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}

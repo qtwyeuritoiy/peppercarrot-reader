@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="define_recyclerviewpager"></string>
+    <!-- Author section -->
+    <string name="library_recyclerviewpager_author">lsjwzh</string>
+    <string name="library_recyclerviewpager_authorWebsite"></string>
+    <!-- Library section -->
+    <string name="library_recyclerviewpager_libraryName">RecyclerViewPager</string>
+    <string name="library_recyclerviewpager_libraryDescription">A ViewPager implementation base on RecyclerView\'s code. Support fling operation like gallery. </string>
+    <string name="library_recyclerviewpager_libraryWebsite"></string>
+    <string name="library_recyclerviewpager_libraryVersion">1.1.2</string>
+    <!-- OpenSource section -->
+    <string name="library_recyclerviewpager_isOpenSource">true</string>
+    <string name="library_recyclerviewpager_repositoryLink">https://github.com/lsjwzh/RecyclerViewPager</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_recyclerviewpager_classPath">com.github.lsjwzh.RecyclerViewPager</string>
+    <!-- License section -->
+    <string name="library_recyclerviewpager_licenseId">apache_2_0</string>
+    <!-- Custom variables section -->
+</resources>
