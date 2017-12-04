@@ -5,7 +5,7 @@ An Official Reader of [Pepper&Carrot](https://www.peppercarrot.com/) for Android
 
 The entire project is written in Kotlin 1.1.
 
-This project has migrated to [another repository](https://framagit.org/peppercarrot/e-reader). This repo will not be updated.
+This project has migrated to [another repository](https://framagit.org/peppercarrot/e-reader). This repo will not be maintained.
 
 Pepper&Carrot is a webcomic made by David Revoy released under CC-BY license.
 
